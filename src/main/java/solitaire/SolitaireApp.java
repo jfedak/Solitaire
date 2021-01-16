@@ -1,23 +1,46 @@
 package solitaire;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import solitaire.model.Board;
+import solitaire.viev.BoardFrame;
 
-public class SolitaireApp extends Application {
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
-    private static HBox root = new HBox();
+
+public class SolitaireApp extends JFrame {
+    /*
+    public SolitaireApp() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(1500,1500);
+        setLocationRelativeTo(this);
+        setTitle("Solitaire");
+
+        Board board = new Board();
+        board.createNewBoard();
+        BoardPanel panel = new BoardPanel(board);
+
+        JPanel jpanel = new JPanel();
+        jpanel.setBackground(new Color(200, 200, 200));
+        jpanel.setSize(400,400);
+        add(jpanel);
+
+        add(panel);
+        setVisible(true);
+
+
+    }
+
+     */
 
     public static void main(String[] args) {
-        launch(args);
+        Board board = new Board();
+        board.createNewBoard();
+        BoardFrame panel = new BoardFrame(board);
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.setTitle("Solitaire");
-        Scene scene = new Scene(root, 1000, 1000);
-        stage.setScene(scene);
-        stage.show();
-    }
 }
