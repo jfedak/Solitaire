@@ -59,13 +59,13 @@ public class Movement implements MouseListener, MouseMotionListener {
         //mouseEvent.getComponent().setLocation(startX, startY);
         CardPanel panel = (CardPanel)mouseEvent.getComponent();
         ArrayList<Position> list = panel.getPositions();
-        System.out.println("panel: " + panel.getX() + " " + panel.getY());
+        //System.out.println("panel: " + panel.getX() + " " + panel.getY());
         int minDist = (panel.getX()-startX)*(panel.getX()-startX) + (panel.getY()-startY)*(panel.getY()-startY);
         Position pos = null;
 
         for(Position p : list) {
             Coordinates cords = getCords(p);
-            System.out.println(cords.x + " " + cords.y);
+            //System.out.println(cords.x + " " + cords.y);
             int x = (panel.getX()-cords.x)*(panel.getX()-cords.x) + (panel.getY()-cords.y)*(panel.getY()-cords.y);
             if(x < minDist) {
                 minDist = x;
@@ -74,7 +74,7 @@ public class Movement implements MouseListener, MouseMotionListener {
         }
 
         if(pos != null) {
-            System.out.println("ala");
+            //System.out.println("ala");
             panel.frame.getBoard().performMove(panel.card, pos);
 
         }
@@ -117,8 +117,8 @@ public class Movement implements MouseListener, MouseMotionListener {
 
     private Coordinates getCords(Position p) {
         if(p.isFoundation())
-            return new Coordinates(100 + 150*p.getPile(), 100);
+            return new Coordinates(100 + 120*p.getPile(), 100);
         else
-            return new Coordinates(100 + 150*p.getPile(), 350 + 40*p.getNumber());
+            return new Coordinates(100 + 120*p.getPile(), 260 + 30*p.getNumber());
     }
 }

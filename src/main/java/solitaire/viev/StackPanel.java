@@ -14,7 +14,7 @@ public class StackPanel extends JPanel {
     static BufferedImage image;
     private Board board;
     private BoardFrame frame;
-    private final int w = 100, h = 150;
+    private final int w = 80, h = 120;
 
     static {
         try {
@@ -26,7 +26,7 @@ public class StackPanel extends JPanel {
     }
 
     public StackPanel(BoardFrame frame) {
-        System.out.println("creating stack!");
+        //System.out.println("creating stack!");
         //setOpaque(false);
         this.frame = frame;
         this.board = frame.getBoard();
@@ -61,7 +61,7 @@ public class StackPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g){
-        System.out.println("printing stack!");
+        //System.out.println("printing stack!");
         super.paintComponent(g);
         if(!board.stackEnded())
             g.drawImage(image,0,0,this);

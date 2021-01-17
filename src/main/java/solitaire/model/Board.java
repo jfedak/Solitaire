@@ -125,6 +125,15 @@ public class Board {
         return list;
     }
 
+    public boolean checkEndgame() {
+        for(int i = 0; i < foundationSize; i++) {
+            System.out.println(foundation[i].getSize());
+            if(foundation[i].getSize() != 13)
+                return false;
+        }
+        return true;
+    }
+
     public void performMove(Card card, Position position) {
         if(card.inStack()) {
             stack.remove(stackPtr);

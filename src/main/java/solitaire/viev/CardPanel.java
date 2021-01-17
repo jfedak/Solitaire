@@ -18,7 +18,7 @@ public class CardPanel extends JPanel {
     BoardFrame frame;
     Card card;
     BufferedImage front;
-    private final int w = 100, h = 150;
+    private final int w = 80, h = 120;
     static BufferedImage[] cardImages;
     static BufferedImage back;
 
@@ -27,7 +27,7 @@ public class CardPanel extends JPanel {
         for(int i = 0; i < 52; i++) {
             String name = "/" + Card.getName(i) + ".png";
             try {
-                System.out.println(i +  ": " + name);
+                //System.out.println(i +  ": " + name);
                 cardImages[i] = ImageIO.read(CardPanel.class.getResource(name));
             } catch (IOException e) {
                 System.out.println("Could not read in the pic");

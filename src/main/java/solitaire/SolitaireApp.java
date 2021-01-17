@@ -40,7 +40,13 @@ public class SolitaireApp extends JFrame {
     public static void main(String[] args) {
         Board board = new Board();
         board.createNewBoard();
-        BoardFrame panel = new BoardFrame(board);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                BoardFrame frame = new BoardFrame(board);
+                frame.setBackground(new Color(52, 162, 73));
+                frame.setVisible(true);
+            }
+        });
     }
 
 }
