@@ -17,10 +17,15 @@ public class BoardFrame extends JFrame {
     public BoardFrame(Board board) {
         setSize(1500, 1500);
         setLocationRelativeTo(this);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.board = board;
         redraw();
         setVisible(true);
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public void redraw() {
@@ -65,6 +70,20 @@ public class BoardFrame extends JFrame {
                 list.add(cpanel);
             }
         }
+
+        ArrayList<Card> stack = board.getStack();
+        int stackPtr = board.getStackPtr();
+        for(int i = 0; i <= 2; i++) {
+            if(stackPtr >= i) {
+                CardPanel cpanel = new CardPanel(stack.get(stackPtr-i), new ArrayList<>(), back, this);
+                cpanel.setLocation(850-30*i, 100);
+                back.add(cpanel);
+            }
+        }
+
+        StackPanel spanel = new StackPanel(this);
+        spanel.setLocation(1000,100);
+        back.add(spanel);
 
         System.out.println(System.currentTimeMillis());
         Movement mv = new Movement(back.getComponents());

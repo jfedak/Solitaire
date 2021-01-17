@@ -13,6 +13,7 @@ public class Board {
     private FoundationCard[] foundation;
     private TableauCard[] tableau;
     private ArrayList<Card> stack;
+    private int stackPtr;
 
     public Board() {
         stack = new ArrayList<>();
@@ -27,8 +28,17 @@ public class Board {
         return tableau;
     }
 
+    public ArrayList<Card> getStack() {
+        return stack;
+    }
+
+    public int getStackPtr() {
+        return stackPtr;
+    }
+
     public void createEmptyBoard() {
         stack.clear();
+        stackPtr = -1;
         foundation = new FoundationCard[foundationSize];
         tableau = new TableauCard[tableauSize];
 
@@ -45,7 +55,7 @@ public class Board {
             list.add(i);
         java.util.Collections.shuffle(list);
 
-        Suit[] suit = new Suit[]{Suit.DIAMONDS, Suit.CLUBS, Suit.HEARTS, Suit.SPADES};
+        Suit[] suit = new Suit[]{Suit.DIAMONDS, Suit.HEARTS, Suit.CLUBS, Suit.SPADES};
         int pileNumber = 0;
         int[] arr = {1, 3, 6, 10, 15, 21, 28};
 
@@ -59,6 +69,7 @@ public class Board {
             System.out.println(pileNumber);
             System.out.println(tableau[pileNumber]);
             System.out.println(tableau[pileNumber].getLast());
+            card.setAbove(tableau[pileNumber].getLast());
             tableau[pileNumber].getLast().setBelow(card);
             if(arr[pileNumber] == j+1)
                 pileNumber++;
@@ -73,28 +84,32 @@ public class Board {
     }
 
     private ArrayList<Position> checkFoundation(Card card) {
+        System.out.println(card.getSuit() + " " + card.getRank());
         ArrayList<Position> list = new ArrayList<>();
         if(!card.isLast())
             return list;
 
         for(int i = 0; i < foundationSize; i++) {
             Card last = foundation[i].getLast();
+            System.out.println(last.getSuit() + " " + last.getRank());
             if(last.getSuit().isSame(card.getSuit()) && last.getRank()+1 == card.getRank())
-                list.add(new Position(0, i, foundation[i].getSize()+1));
+                list.add(new Position(0, i, 0));
         }
 
         return list;
     }
 
     private ArrayList<Position> checkTableau(Card card) {
+        System.out.println(card.getSuit() + " " + card.getRank());
         ArrayList<Position> list = new ArrayList<>();
         if(!card.isVisible())
             return list;
 
         for(int i = 0; i < tableauSize; i++) {
             Card last = tableau[i].getLast();
+            System.out.println(last.getSuit() + " " + last.getRank());
             if(last.getSuit().isOpposite(card.getSuit()) && last.getRank()-1 == card.getRank())
-                list.add(new Position(1, i, tableau[i].getSize()+1));
+                list.add(new Position(1, i, tableau[i].getSize()));
         }
 
         return list;
@@ -110,4 +125,44 @@ public class Board {
         return list;
     }
 
+    public void performMove(Card card, Position position) {
+        if(card.inStack()) {
+            stack.remove(stackPtr);
+            stackPtr--;
+        }
+        if(card.getAbove() != null) {
+            if(!card.getAbove().isVisible())
+                card.getAbove().swapVisibility();
+            card.getAbove().setBelow(null);
+        }
+
+        card.setAbove(null);
+
+        Card to;
+        if(position.isFoundation())
+            to = foundation[position.getPile()].getLast();
+        else
+            to = tableau[position.getPile()].getLast();
+
+        to.setBelow(card);
+        card.setAbove(to);
+    }
+
+    // move pointer on stack
+    public void performMove() {
+        if(stackEnded())
+            stackPtr = -1;
+        else
+            stackPtr++;
+    }
+
+    public boolean stackEnded() {
+        return stack.size() == 0 || stackPtr == stack.size()-1;
+    }
+
+    public boolean isCardPointed(Card card) {
+        if(stackPtr == -1)
+            return false;
+        return stack.get(stackPtr) == card;
+    }
 }

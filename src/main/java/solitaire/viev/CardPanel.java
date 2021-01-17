@@ -17,8 +17,32 @@ public class CardPanel extends JPanel {
     JPanel main;
     BoardFrame frame;
     Card card;
-    BufferedImage back, front;
+    BufferedImage front;
     private final int w = 100, h = 150;
+    static BufferedImage[] cardImages;
+    static BufferedImage back;
+
+    static {
+        cardImages = new BufferedImage[52];
+        for(int i = 0; i < 52; i++) {
+            String name = "/" + Card.getName(i) + ".png";
+            try {
+                System.out.println(i +  ": " + name);
+                cardImages[i] = ImageIO.read(CardPanel.class.getResource(name));
+            } catch (IOException e) {
+                System.out.println("Could not read in the pic");
+                System.exit(0);
+            }
+        }
+
+        try {
+            back = ImageIO.read(CardPanel.class.getResource("/blue_back.png"));
+        } catch (IOException e) {
+            System.out.println("Could not read in the pic");
+            System.exit(0);
+        }
+
+    }
 
     public CardPanel(Card c, ArrayList<JPanel> list, JPanel main, BoardFrame frame) {
         setOpaque(false);
@@ -26,52 +50,10 @@ public class CardPanel extends JPanel {
         this.frame = frame;
         this.dependencies = list;
         this.main = main;
-        try {
-            String name = "/";
-            switch(c.getRank()) {
-                case 1:
-                    name += "A";
-                    break;
-                case 11:
-                    name += "J";
-                    break;
-                case 12:
-                    name += "Q";
-                    break;
-                case 13:
-                    name += "K";
-                    break;
-                default:
-                    name += (c.getRank());
-            }
 
-            switch(c.getSuit()) {
-                case DIAMONDS:
-                    name += "D";
-                    break;
-                case HEARTS:
-                    name += "H";
-                    break;
-                case CLUBS:
-                    name += "C";
-                    break;
-                case SPADES:
-                    name += "S";
-                    break;
-            }
-
-            name += ".png";
-
-            //System.out.println(name);
-            back = ImageIO.read(getClass().getResource("/blue_back.png"));
-            front = ImageIO.read(getClass().getResource(name));
-
-            setSize(w, h);
-
-        } catch (IOException ioe) {
-            System.out.println("Could not read in the pic");
-            System.exit(0);
-        }
+        int number = c.getNumber();
+        front = cardImages[number];
+        setSize(w, h);
     }
 
     public void setDependencies(ArrayList<JPanel> list) {
@@ -91,6 +73,10 @@ public class CardPanel extends JPanel {
 
     public Dimension getPreferredSize() {
         return new Dimension(w,h);
+    }
+
+    public ArrayList<Position> getPositions() {
+        return frame.getBoard().getPositions(card);
     }
 
     public void paintComponent(Graphics g){

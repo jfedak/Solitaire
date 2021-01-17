@@ -38,12 +38,10 @@ public class Card {
 
     public void setBelow(Card card) {
         this.below = card;
-        card.above = this;
     }
 
     public void setAbove(Card card) {
         this.above = card;
-        card.below = this;
     }
 
     public Card getBelow() {
@@ -109,11 +107,48 @@ public class Card {
     public int getNumber() {
         int ans = 0;
         if(suit == Suit.DIAMONDS) ans += 0;
-        else if(suit == Suit.CLUBS) ans += 13;
-        else if(suit == Suit.HEARTS) ans += 26;
+        else if(suit == Suit.HEARTS) ans += 13;
+        else if(suit == Suit.CLUBS) ans += 26;
         else if(suit == Suit.SPADES) ans += 39;
 
         ans += (rank-1);
         return ans;
+    }
+
+    public static String getName(int num) {
+        String name = "";
+        switch((num%13)+1) {
+            case 1:
+                name += "A";
+                break;
+            case 11:
+                name += "J";
+                break;
+            case 12:
+                name += "Q";
+                break;
+            case 13:
+                name += "K";
+                break;
+            default:
+                name += ((num%13)+1);
+        }
+
+        switch(num/13) {
+            case 0:
+                name += "D";
+                break;
+            case 1:
+                name += "H";
+                break;
+            case 2:
+                name += "C";
+                break;
+            case 3:
+                name += "S";
+                break;
+        }
+
+        return name;
     }
 }
