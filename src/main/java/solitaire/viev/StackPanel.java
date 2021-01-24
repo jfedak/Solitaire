@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class StackPanel extends JPanel {
-    static BufferedImage image;
+    static BufferedImage image, empty;
     private Board board;
     private BoardFrame frame;
     private final int w = 80, h = 120;
@@ -19,6 +19,7 @@ public class StackPanel extends JPanel {
     static {
         try {
             image = ImageIO.read(CardPanel.class.getResource("/blue_back.png"));
+            empty = ImageIO.read(CardPanel.class.getResource("/stack.png"));
         } catch (IOException e) {
             System.out.println("Could not read in the pic");
             System.exit(0);
@@ -26,8 +27,7 @@ public class StackPanel extends JPanel {
     }
 
     public StackPanel(BoardFrame frame) {
-        //System.out.println("creating stack!");
-        //setOpaque(false);
+        setOpaque(false);
         this.frame = frame;
         this.board = frame.getBoard();
 
@@ -61,9 +61,10 @@ public class StackPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g){
-        //System.out.println("printing stack!");
         super.paintComponent(g);
         if(!board.stackEnded())
             g.drawImage(image,0,0,this);
+        else
+            g.drawImage(empty,0,0,this);
     }
 }

@@ -1,6 +1,5 @@
 package solitaire.viev;
 
-import javafx.geometry.Pos;
 import solitaire.model.Position;
 
 import javax.swing.*;
