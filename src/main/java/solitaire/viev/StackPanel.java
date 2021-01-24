@@ -11,9 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class StackPanel extends JPanel {
-    static BufferedImage image, empty;
+    private static BufferedImage image, empty;
     private Board board;
-    private BoardFrame frame;
     private final int w = 80, h = 120;
 
     static {
@@ -28,11 +27,7 @@ public class StackPanel extends JPanel {
 
     public StackPanel(BoardFrame frame) {
         setOpaque(false);
-        this.frame = frame;
         this.board = frame.getBoard();
-
-        if(board.stackEnded())
-            setBackground(new Color(211,211,211));
 
         addMouseListener(new MouseListener() {
             @Override

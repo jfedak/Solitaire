@@ -5,15 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class GameButton extends JPanel {
-    static BufferedImage normal, pressed;
-    int w = 100, h = 30;
-    boolean isPressed = false;
-    BoardFrame frame;
+
+    private static BufferedImage normal, pressed;
+    private int w = 100, h = 30;
+    private boolean isPressed = false;
 
     static {
         try {
@@ -26,7 +25,6 @@ public class GameButton extends JPanel {
     }
 
     public GameButton(BoardFrame frame) {
-        this.frame = frame;
         setSize(w, h);
         addMouseListener(new MouseListener() {
             @Override

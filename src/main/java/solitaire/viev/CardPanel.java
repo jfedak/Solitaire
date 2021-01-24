@@ -2,7 +2,6 @@ package solitaire.viev;
 
 import solitaire.model.Position;
 import solitaire.model.cards.Card;
-import solitaire.model.cards.Suit;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,12 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CardPanel extends JPanel {
-    ArrayList<JPanel> dependencies;
-    ArrayList<Position> positions;
-    JPanel main;
-    BoardFrame frame;
-    Card card;
-    BufferedImage front;
+    private ArrayList<JPanel> dependencies;
+    private JPanel main;
+    private BoardFrame frame;
+    private Card card;
+    private BufferedImage front;
     private final int w = 80, h = 120;
     static BufferedImage[] cardImages;
     static BufferedImage back;
@@ -27,7 +25,6 @@ public class CardPanel extends JPanel {
         for(int i = 0; i < 52; i++) {
             String name = "/" + Card.getName(i) + ".png";
             try {
-                //System.out.println(i +  ": " + name);
                 cardImages[i] = ImageIO.read(CardPanel.class.getResource(name));
             } catch (IOException e) {
                 System.out.println("Could not read in the pic");
@@ -56,19 +53,20 @@ public class CardPanel extends JPanel {
         setSize(w, h);
     }
 
-    public void setDependencies(ArrayList<JPanel> list) {
-        dependencies = list;
+    public ArrayList<JPanel> getDependencies() {
+        return this.dependencies;
     }
 
-    public void setCard(Card c) {
-        if(this.card.getRank() == c.getRank() && this.card.getSuit() == c.getSuit())
-            this.card = c;
-        else
-            System.out.println("Wrong card!!!");
+    public JPanel getMain() {
+        return this.main;
     }
 
-    public void setMain(JPanel panel) {
-        this.main = panel;
+    public BoardFrame getFrame() {
+        return this.frame;
+    }
+
+    public Card getCard() {
+        return this.card;
     }
 
     public Dimension getPreferredSize() {

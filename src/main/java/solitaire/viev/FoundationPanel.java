@@ -1,7 +1,5 @@
 package solitaire.viev;
 
-import solitaire.model.cards.Card;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +9,7 @@ import java.io.IOException;
 public class FoundationPanel extends JPanel {
 
     private final int w = 80, h = 120;
-    static BufferedImage image;
+    private static BufferedImage image;
 
     static {
         try {
@@ -25,7 +23,6 @@ public class FoundationPanel extends JPanel {
     public FoundationPanel() {
         setOpaque(false);
         setSize(w,h);
-        setBackground(new Color(211,211,211));
     }
 
     public Dimension getPreferredSize() {

@@ -66,9 +66,6 @@ public class Board {
             if(arr[pileNumber] == j+1)
                 card.swapVisibility();
 
-            System.out.println(pileNumber);
-            System.out.println(tableau[pileNumber]);
-            System.out.println(tableau[pileNumber].getLast());
             card.setAbove(tableau[pileNumber].getLast());
             tableau[pileNumber].getLast().setBelow(card);
             if(arr[pileNumber] == j+1)
@@ -81,17 +78,17 @@ public class Board {
             Card card = new Card(suit[(i-1)/13], ((i-1)%13)+1);
             stack.add(card);
         }
+
+        System.out.println("New game created. GLHF!");
     }
 
     private ArrayList<Position> checkFoundation(Card card) {
-        System.out.println(card.getSuit() + " " + card.getRank());
         ArrayList<Position> list = new ArrayList<>();
         if(!card.isLast())
             return list;
 
         for(int i = 0; i < foundationSize; i++) {
             Card last = foundation[i].getLast();
-            System.out.println(last.getSuit() + " " + last.getRank());
             if(last.getSuit().isSame(card.getSuit()) && last.getRank()+1 == card.getRank())
                 list.add(new Position(0, i, 0));
         }
@@ -100,14 +97,12 @@ public class Board {
     }
 
     private ArrayList<Position> checkTableau(Card card) {
-        System.out.println(card.getSuit() + " " + card.getRank());
         ArrayList<Position> list = new ArrayList<>();
         if(!card.isVisible())
             return list;
 
         for(int i = 0; i < tableauSize; i++) {
             Card last = tableau[i].getLast();
-            System.out.println(last.getSuit() + " " + last.getRank());
             if(last.getSuit().isOpposite(card.getSuit()) && last.getRank()-1 == card.getRank())
                 list.add(new Position(1, i, tableau[i].getSize()));
         }
@@ -127,7 +122,6 @@ public class Board {
 
     public boolean checkEndgame() {
         for(int i = 0; i < foundationSize; i++) {
-            System.out.println(foundation[i].getSize());
             if(foundation[i].getSize() != 13)
                 return false;
         }
@@ -135,6 +129,7 @@ public class Board {
     }
 
     public void performMove(Card card, Position position) {
+        System.out.println("Move: " + Card.getName(card.getNumber()));
         if(card.inStack()) {
             stack.remove(stackPtr);
             stackPtr--;
@@ -159,6 +154,7 @@ public class Board {
 
     // move pointer on stack
     public void performMove() {
+        System.out.println("Move: stack clicked");
         if(stackEnded())
             stackPtr = -1;
         else
